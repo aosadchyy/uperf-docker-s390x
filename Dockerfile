@@ -1,22 +1,25 @@
-FROM registry.access.redhat.com/ubi8 as build
+FROM registry.access.redhat.com/ubi7 as build
 
 MAINTAINER Alex Osadchyy
 
 WORKDIR /workspace
 
+#ENV ARCH=`arch`
 # Install dependencies
-RUN yum install -y git lksctp-tools lksctp-tools-devel
+RUN yum install -y git lksctp-tools lksctp-tools-devel autoconf automake binutils gcc gcc-c++ gdb glibc-devel libtool make pkgconf &&\
+    export ARCH=`arch` && echo -e "\n Architecture: ${ARCH} \n"
+RUN git clone https://github.com/sctp/lksctp-tools.git && cp ./lksctp-tools/src/include/netinet/sctp.h.in /usr/include/netinet/sctp.h
+
 # Pull uperf source code
-RUN git clone https://github.com/uperf/uperf.git && cd uperf
+RUN git clone https://github.com/uperf/uperf.git
 # Build uperf binary
-RUN ./configure && make && make install
+RUN ls /usr/include/netinet/ && cd uperf && chmod a+x ./configure && ./configure --disable-dependency-tracking && make
 
 
-FROM registry.access.redhat.com/ubi8/ubi-minimal
-RUN groupadd uperf && useradd -g uperf uperf
-VOLUME /tmp
+FROM registry.access.redhat.com/ubi7/ubi-minimal
+
 USER uperf
-ARG DEPENDENCY=/workspace/uperf
+ARG DEPENDENCY=/workspace/uperf/src
 COPY --from=build ${DEPENDENCY}/uperf /
 COPY perf_conf.xml /
 
