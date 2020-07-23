@@ -24,7 +24,7 @@ ARG DEPENDENCY=/workspace/uperf/src
 COPY --from=build ${DEPENDENCY}/uperf /app
 COPY perf_conf.xml /app
 
-RUN chmod a+w /app/perf_conf.xml
+RUN chmod -R a+w /app
 
 EXPOSE 5201/tcp 5001/udp
 
