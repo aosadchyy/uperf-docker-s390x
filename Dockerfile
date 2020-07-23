@@ -13,7 +13,7 @@ RUN git clone https://github.com/sctp/lksctp-tools.git && cp ./lksctp-tools/src/
 # Pull uperf source code
 RUN git clone https://github.com/uperf/uperf.git
 # Build uperf binary
-RUN cd uperf && chmod a+x ./configure && ./configure --disable-dependency-tracking && make && chmod a+x ./src/uperf 
+RUN cd uperf && chmod a+x ./configure && ./configure --disable-dependency-tracking && make && chmod a+x ./src/uperf
 
 
 FROM registry.access.redhat.com/ubi7/ubi-minimal
@@ -23,6 +23,8 @@ WORKDIR /app
 ARG DEPENDENCY=/workspace/uperf/src
 COPY --from=build ${DEPENDENCY}/uperf /app
 COPY perf_conf.xml /app
+
+RUN chmod a+w /app/perf_conf.xml
 
 EXPOSE 5201/tcp 5001/udp
 
