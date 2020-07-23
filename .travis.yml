@@ -1,0 +1,11 @@
+language: c
+arch:
+  - s390x
+
+services:
+  - docker
+
+before_install:
+  - docker build -t lockerua/uperf-s390x .
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin registry-1.docker.io
+  - docker push lockerua/uperf-s390x
