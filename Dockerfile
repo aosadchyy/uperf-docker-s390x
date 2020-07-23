@@ -1,4 +1,4 @@
-FROM registry.redhat.io/ubi8/ubi as build
+FROM registry.access.redhat.com/ubi8 as build
 
 MAINTAINER Alex Osadchyy
 
@@ -12,7 +12,7 @@ RUN git clone https://github.com/uperf/uperf.git && cd uperf
 RUN ./configure && make && make install
 
 
-FROM registry.redhat.io/ubi8/ubi-minimal
+FROM registry.access.redhat.com/ubi8/ubi-minimal
 RUN groupadd uperf && useradd -g uperf uperf
 VOLUME /tmp
 USER uperf
