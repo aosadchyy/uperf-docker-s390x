@@ -17,8 +17,8 @@ RUN groupadd uperf && useradd -g uperf uperf
 VOLUME /tmp
 USER uperf
 ARG DEPENDENCY=/workspace/uperf
-COPY --from=build ${DEPENDENCY}/uperf
-COPY perf_conf.xml
+COPY --from=build ${DEPENDENCY}/uperf /
+COPY perf_conf.xml /
 
 EXPOSE 5201/tcp 5001/udp
 
