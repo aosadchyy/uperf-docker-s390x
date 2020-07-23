@@ -18,10 +18,11 @@ RUN cd uperf && chmod a+x ./configure && ./configure --disable-dependency-tracki
 
 FROM registry.access.redhat.com/ubi7/ubi-minimal
 
+WORKDIR /app
 USER uperf
 ARG DEPENDENCY=/workspace/uperf/src
-COPY --from=build ${DEPENDENCY}/uperf /
-COPY perf_conf.xml /
+COPY --from=build ${DEPENDENCY}/uperf /app
+COPY perf_conf.xml /app
 
 EXPOSE 5201/tcp 5001/udp
 
@@ -29,4 +30,4 @@ EXPOSE 5201/tcp 5001/udp
 #   server#>uperf -s 
 #   client#>uperf -m perf_conf.xml -a -i 30; sleep 3600
 
-CMD ["uperf"]
+CMD ["/app/uperf"]
