@@ -13,7 +13,7 @@ RUN git clone https://github.com/sctp/lksctp-tools.git && cp ./lksctp-tools/src/
 # Pull uperf source code
 RUN git clone https://github.com/uperf/uperf.git
 # Build uperf binary
-RUN ls /usr/include/netinet/ && cd uperf && chmod a+x ./configure && ./configure --disable-dependency-tracking && make && && chmod a+x ./src/uperf 
+RUN cd uperf && chmod a+x ./configure && ./configure --disable-dependency-tracking && make && chmod a+x ./src/uperf 
 
 
 FROM registry.access.redhat.com/ubi7/ubi-minimal
