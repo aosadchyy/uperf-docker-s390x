@@ -16,7 +16,7 @@ RUN git clone https://github.com/uperf/uperf.git
 RUN cd uperf && chmod a+x ./configure && ./configure --disable-dependency-tracking && make && chmod a+x ./src/uperf
 
 
-FROM registry.access.redhat.com/ubi7/ubi-minimal
+FROM registry.access.redhat.com/ubi7/ubi
 
 WORKDIR /app
 
@@ -25,7 +25,8 @@ COPY --from=build ${DEPENDENCY}/uperf /app
 COPY perf_conf.xml /app
 
 RUN chmod -R a+w /app
-
+RUN yum install -y https://download.sinenomine.net/epel/epel-7/noarch/epel-release-7-12.noarch.rpm
+RUN yum install -y bind-utils net-tools nmap iputils tcpdump whois
 EXPOSE 5201/tcp 5001/udp
 
 # usage: 
