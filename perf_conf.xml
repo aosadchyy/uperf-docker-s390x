@@ -2,9 +2,8 @@
 <profile name="TCP_RW_JAVA_HTTP">
     <group nthreads="256">
         <transaction duration="300s">
-            <!--windsz =8k to match java default socket send and receive buffer size-->
             <flowop type="accept" options="remotehost=uperf-server protocol=tcp tcp_nodelay"/>
-            <flowop type="write" options="size=2k"/>
+<!--            <flowop type="write" options="size=2k"/>-->
             <flowop type="read" options="size=2k"/>
             <flowop type="disconnect" />
         </transaction>
