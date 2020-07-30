@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uperf-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uperf-server
+  template:
+    metadata:
+      labels:
+        app: uperf-server
+    spec:
+      restartPolicy: Always
+#      dnsConfig:
+#        options:
+#          - name: single-request-reopen
+#          - name: timeout
+#            value: "1"
+#          - name: attempts
+#            value: "5"
+#          - name: ndots
+#            value: "3"
+            
+      containers:
+        - name: uperf-server-container
+          image: private-repo/uperf-s390x
+          command: ["./uperf"]
+          args: ["-s"]
+          ports:
+          - containerPort: 20000
+            protocol: TCP 
+          - containerPort: 20001
+            protocol: UDP 
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 500m
+              memory: 2Gi
+            requests:
+              cpu: 500m
+              memory: 2Gi
+      dnsPolicy: ClusterFirst

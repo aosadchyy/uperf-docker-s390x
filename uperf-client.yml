@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uperf-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uperf-client
+  template:
+    metadata:
+      labels:
+        app: uperf-client
+    spec:
+      restartPolicy: Always
+      dnsConfig:
+        options:
+          - name: single-request-reopen
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - uperf-client
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+        - name: uperf-client-container
+          image: private-repo/uperf-s390x
+          command: ["/bin/sh", "-c"]
+          args: 
+            - sed -i 's/256/1/g' /app/perf_conf.xml;
+              sed -i 's/300s/30s/g' /app/perf_conf.xml;
+              sed -i 's/2k/300/g' /app/perf_conf.xml;
+              cat /app/perf_conf.xml;
+              while true; do echo -n "$(date)"; ./uperf -m /app/perf_conf.xml -a; done
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 500m
+              memory: 2Gi
+            requests:
+              cpu: 500m
+              memory: 2Gi
+      dnsPolicy: ClusterFirst
+      

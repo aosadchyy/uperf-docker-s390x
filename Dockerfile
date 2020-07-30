@@ -16,8 +16,8 @@ RUN git clone https://github.com/uperf/uperf.git
 RUN cd uperf && chmod a+x ./configure && ./configure --disable-dependency-tracking && make && chmod a+x ./src/uperf
 
 
-#FROM registry.access.redhat.com/ubi7/ubi
-FROM clefos:7
+FROM registry.access.redhat.com/ubi7/ubi
+#FROM clefos:7
 
 WORKDIR /app
 
