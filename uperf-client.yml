@@ -28,7 +28,7 @@ spec:
             topologyKey: "kubernetes.io/hostname"
       containers:
         - name: uperf-client-container
-          image: private-repo/uperf-s390x
+          image: lockerua/uperf-s390x
           command: ["/bin/sh", "-c"]
           args: 
             - sed -i 's/256/1/g' /app/perf_conf.xml;
@@ -37,12 +37,12 @@ spec:
               cat /app/perf_conf.xml;
               while true; do echo -n "$(date)"; ./uperf -m /app/perf_conf.xml -a; done
           imagePullPolicy: Always
-          resources:
-            limits:
-              cpu: 500m
-              memory: 2Gi
-            requests:
-              cpu: 500m
-              memory: 2Gi
+#          resources:
+#            limits:
+#              cpu: 100m
+#              memory: 2Gi
+#            requests:
+#              cpu: 100m
+#              memory: 2Gi
       dnsPolicy: ClusterFirst
       

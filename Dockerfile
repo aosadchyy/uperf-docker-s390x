@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi7 as build
+FROM registry.access.redhat.com/ubi8 as build
 
 MAINTAINER Alex Osadchyy
 
@@ -13,10 +13,10 @@ RUN git clone https://github.com/sctp/lksctp-tools.git && cp ./lksctp-tools/src/
 # Pull uperf source code
 RUN git clone https://github.com/uperf/uperf.git
 # Build uperf binary
-RUN cd uperf && chmod a+x ./configure && ./configure --disable-dependency-tracking && make && chmod a+x ./src/uperf
+RUN cd uperf && autoreconf -f -i && chmod a+x ./configure && ./configure --disable-dependency-tracking && make && chmod a+x ./src/uperf
 
 
-FROM registry.access.redhat.com/ubi7/ubi
+FROM registry.access.redhat.com/ubi8/ubi
 #FROM clefos:7
 
 WORKDIR /app

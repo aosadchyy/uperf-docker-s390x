@@ -1,11 +1,16 @@
 # uperf-docker-s390x
-docker  container for uperf client/server on s390x architecture
+docker  container for uperf client/server on s390x architecture. Builds using s390x arch in Travis. 
 
 ### Deploying to OpenShift cluster
 1. uperf server 
 ``` 
-        oc create -f uperf-server.yml
-        oc create -f uperf-service.yml
+        oc apply -f uperf-server.yml
+        oc apply -f uperf-service.yml
 ```
 
-1. uperf client ``` oc create -f uperf-client.yml```
+2. uperf client ``` oc apply -f uperf-client.yml```
+
+### Rebuilding docker images using buildx with target architectures
+```
+docker buildx build --platform linux/x86_64,linux/s390x -t lockerua/uperf-s390x --push .
+```
