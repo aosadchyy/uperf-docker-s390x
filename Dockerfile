@@ -1,6 +1,7 @@
 FROM registry.access.redhat.com/ubi8 as build
 
-MAINTAINER Alex Osadchyy
+LABEL name="Network test app" \
+    maintainer="Alex Osadchyy"
 
 WORKDIR /workspace
 
@@ -16,7 +17,7 @@ RUN git clone https://github.com/uperf/uperf.git
 RUN cd uperf && autoreconf -f -i && chmod a+x ./configure && ./configure --disable-dependency-tracking && make && chmod a+x ./src/uperf
 
 
-FROM registry.access.redhat.com/ubi8/ubi
+FROM registry.access.redhat.com/ubi7/ubi
 #FROM clefos:7
 
 WORKDIR /app
@@ -27,7 +28,7 @@ COPY perf_conf.xml /app
 
 RUN chmod -R a+w /app
 RUN yum install -y https://rpmfind.net/linux/epel/testing/8/Everything/s390x/Packages/e/epel-release-8-8.el8.noarch.rpm
-RUN yum install -y bind-utils net-tools nmap iputils
+RUN yum install -y bind-utils net-tools nmap iputils kmod
 EXPOSE 5201/tcp 5001/udp
 
 # usage: 
