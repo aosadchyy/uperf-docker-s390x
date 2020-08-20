@@ -25,7 +25,7 @@ spec:
             
       containers:
         - name: uperf-server-container
-          image: lockerua/uperf-s390x
+          image: aosadchyy/uperf-s390x
           command: ["./uperf"]
           args: ["-s"]
           ports:

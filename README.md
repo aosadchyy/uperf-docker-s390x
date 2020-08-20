@@ -12,5 +12,5 @@ docker  container for uperf client/server on s390x architecture. Builds using s3
 
 ### Rebuilding docker images using buildx with target architectures
 ```
-docker buildx build --platform linux/x86_64,linux/s390x -t lockerua/uperf-s390x --push .
+docker buildx build --platform linux/x86_64,linux/s390x -t aosadchyy/uperf --push .
 ```

@@ -3,9 +3,9 @@ arch:
 services:
   - docker
 before_script:
-  - docker build -t lockerua/uperf-s390x .
+  - docker build -t aosadchyy/uperf:manifest-s390x --build-arg ARCH=s390x/ .
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin docker.io
 script:
-  - docker push lockerua/uperf-s390x
+  - docker push aosadchyy/uperf:manifest-s390x
 after_script:
   - docker images

@@ -28,7 +28,7 @@ spec:
             topologyKey: "kubernetes.io/hostname"
       containers:
         - name: uperf-client-container
-          image: lockerua/uperf-s390x
+          image: aosadchyy/uperf-s390x
           command: ["/bin/sh", "-c"]
           args: 
             - sed -i 's/256/1/g' /app/perf_conf.xml;
