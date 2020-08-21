@@ -27,7 +27,7 @@ COPY --from=build ${DEPENDENCY}/uperf /app
 COPY perf_conf.xml /app
 
 RUN chmod -R a+w /app
-RUN yum install -y https://rpmfind.net/linux/epel/testing/8/Everything/s390x/Packages/e/epel-release-8-8.el8.noarch.rpm
+#RUN yum install -y https://rpmfind.net/linux/epel/testing/8/Everything/s390x/Packages/e/epel-release-8-8.el8.noarch.rpm
 RUN yum install -y bind-utils net-tools nmap iputils kmod
 EXPOSE 5201/tcp 5001/udp
 
